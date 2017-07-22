@@ -10,16 +10,16 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click to store all words"
-        android:onClick="startUpload"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="466dp"
-        android:textAllCaps="false"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:onClick="startUpload"
+        android:text="Click to store all words"
+        android:textAllCaps="false"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="466dp" />
 
     <ListView
         android:id="@+id/list"
@@ -27,7 +27,8 @@
         android:layout_height="400dp"
         android:layout_above="@+id/button"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
@@ -36,22 +37,22 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
+        android:text=""
         android:textAlignment="center"
-        android:textSize="20dp"
-        android:text="" />
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="retriveData"
-        android:text="Click to view all words"
-        android:layout_marginRight="15dp"
-        android:textAllCaps="false"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/button"
         android:layout_toStartOf="@+id/button"
-        android:layout_marginEnd="20dp" />
+        android:onClick="retriveData"
+        android:text="Click to view all words"
+        android:textAllCaps="false" />
 
 
 </RelativeLayout>

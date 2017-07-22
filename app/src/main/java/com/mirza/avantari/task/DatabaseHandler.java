@@ -32,7 +32,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-                + WORD_NAME + " TEXT," + WORD_SPEECH + " TEXT," + WORD_MEAN + " TEXT)";
+                + WORD_NAME + " TEXT," + WORD_SPEECH + " TEXT," + WORD_MEAN
+                + " TEXT,unique (" + WORD_NAME + "," + WORD_SPEECH + "," + WORD_MEAN + "))";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -77,19 +78,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String> getdData() {
         List<String> data = new ArrayList<String>();
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase database = this.getWritableDatabase();
         try {
             String[] projection = {
                     WORD_NAME,
                     WORD_SPEECH,
                     WORD_MEAN
             };
-            Cursor cb = db.query(TABLE_NAME, projection, null, null, null, null, null);
+            Cursor cursor = database.query(TABLE_NAME, projection, null, null, null, null, null);
 
-            while (cb.moveToNext()) {
-                String word = cb.getString(cb.getColumnIndexOrThrow(WORD_NAME));
-                String speech = cb.getString(cb.getColumnIndexOrThrow(WORD_SPEECH));
-                String mean = cb.getString(cb.getColumnIndexOrThrow(WORD_MEAN));
+            while (cursor.moveToNext()) {
+                String word = cursor.getString(cursor.getColumnIndexOrThrow(WORD_NAME));
+                String speech = cursor.getString(cursor.getColumnIndexOrThrow(WORD_SPEECH));
+                String mean = cursor.getString(cursor.getColumnIndexOrThrow(WORD_MEAN));
                 data.add(word + "  (" + speech + ")\n" + mean);
             }
         } catch (Exception e) {
@@ -100,7 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public String getMeaning(String word) {
         String mean = "";
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase database = this.getReadableDatabase();
 
         try {
 
@@ -112,7 +113,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             String[] selectionArgs = {word};
 
 
-            Cursor cursor = db.query(
+            Cursor cursor = database.query(
                     TABLE_NAME,
                     projection,
                     selection,
@@ -128,5 +129,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
         return mean;
+    }
+
+    public void removeData() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(database);
     }
 }
