@@ -1,0 +1,12 @@
+/*********************************** Task2 ***************************************/
+Approach:
+Just install and open the apk file and you will find two buttons.
+First button is labelled as click to view all words that will show all the stored words in a ListView.
+Second button is labelled as click to store all words that will fetch and store all words in SQLite table.
+After storing words to local storage, it will also show minimum time among all submissions of each html file to local storage in a TextView.
+Background processing:
+What I did in this task is just retrieved all the text (HTML text) of each html file as a string and extracted the required information using regular expressions.
+I fetched the html text in async background process and after fetching each html file, I stored the extracted words in local storage that is SQLite database.
+During submission to local storage I just ran a thread in background to calculate the execution time that is minimum among all the submission. At the end, I have displayed the exc_time in a TextView.
+I also retrieved the words with their speeches and meanings from local storage and displayed them in a ListView.
+

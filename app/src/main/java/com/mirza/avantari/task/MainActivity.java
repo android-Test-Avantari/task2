@@ -50,6 +50,8 @@ public class MainActivity extends Activity implements Runnable {
     int timer = 0;
     Thread thread;
     boolean counting = true;
+    int exc_time = 0;
+    boolean nextCount = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class MainActivity extends Activity implements Runnable {
         ArrayAdapter adapter = new ArrayAdapter<String>(getBaseContext(),
                 android.R.layout.simple_list_item_1, retrievedData);
         list.setAdapter(adapter);
-        text.setText("Time in seconds to retrieve data: " + timer);
+        text.setText("Time in seconds to retrieve all data: " + timer);
         counting = true;
 
     }
@@ -103,6 +105,13 @@ public class MainActivity extends Activity implements Runnable {
                 if (!counting) {
                     //for calculating time required to do operation
                     timer++;
+                    if (nextCount) {
+                        if(exc_time==0){
+                            exc_time=timer;
+                        }else if(exc_time>timer){
+                            exc_time=timer;
+                        }
+                    }
                 }
             } catch (Exception e) {
             }
@@ -163,6 +172,7 @@ public class MainActivity extends Activity implements Runnable {
                 String speeches[] = matchedSpeeches.toArray(new String[0]);
                 String meaning[] = matchedMean.toArray(new String[0]);
                 counting = false;
+                nextCount=true;
                 dbHandler.addWords(words, speeches, meaning);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -173,7 +183,8 @@ public class MainActivity extends Activity implements Runnable {
 
         protected void onPostExecute(String result) {
             counting = true;
-            text.setText("Time in seconds to store data: " + timer);
+            nextCount=false;
+            text.setText("Minimum time among all submission in seconds: " + exc_time);
             load.dismiss();
         }
     }
